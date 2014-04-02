@@ -78,8 +78,8 @@
             $.post(url, $( "#snippet_form" ).serialize(), function(data){
                 console.log("Saved");
                 console.log(data);
-                if (url === "/snippets" || url === "/snippets/"){
-                    var newUrl = "/snippets/" + data['uuid'];
+                if (url === "/s" || url === "/s/"){
+                    var newUrl = "/s/" + data['uuid'];
                     $('#snippet_form').attr('action', newUrl);
                     if (history && history.pushState) { 
                         history.replaceState(null, document.title, newUrl);
