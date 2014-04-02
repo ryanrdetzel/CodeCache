@@ -1,11 +1,21 @@
 CodeCache::Application.routes.draw do
-  resources :snippets
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  #root 'snippets#index'
+  get '/', to: redirect('/snippets')
+  get '/snippets' => 'snippets#index'
+  get '/snippets/:uuid' => 'snippets#edit', :as => :snippet
+  patch '/snippets/:uuid' => 'snippets#update', :as => :edit_snippet
+  post '/snippets' => 'snippets#create', :as => :new_snippet
+
+  #resources :snippets do
+  #  collection do
+  #    get ':uuid' => 'snippets#edit'
+  #  end
+  #end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

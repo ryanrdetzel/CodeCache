@@ -11,13 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402134321) do
+ActiveRecord::Schema.define(version: 20140402171406) do
 
   create_table "snippets", force: true do |t|
-    t.string   "content"
-    t.string   "type"
+    t.text     "content",    limit: 4294967295
+    t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "uuid"
+    t.text     "title"
   end
 
 end
