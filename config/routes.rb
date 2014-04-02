@@ -8,8 +8,8 @@ CodeCache::Application.routes.draw do
   get '/', to: redirect('/snippets')
   get '/snippets' => 'snippets#index'
   get '/snippets/:uuid' => 'snippets#edit', :as => :snippet
-  patch '/snippets/:uuid' => 'snippets#update', :as => :edit_snippet
-  post '/snippets' => 'snippets#create', :as => :new_snippet
+  post '/snippets/:uuid' => 'snippets#update', :as => :edit_snippet, :defaults => { :format => 'json' }
+  post '/snippets' => 'snippets#create', :as => :new_snippet, :defaults => { :format => 'json' }
 
   #resources :snippets do
   #  collection do

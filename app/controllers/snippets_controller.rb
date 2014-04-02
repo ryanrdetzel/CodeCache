@@ -17,14 +17,16 @@ class SnippetsController < ApplicationController
   # POST /snippets
   # POST /snippets.json
   def create
+    logger.debug "CREATE"
     @snippet = Snippet.new(snippet_params)
 
     respond_to do |format|
       if @snippet.save
         format.html { redirect_to @snippet, notice: 'Snippet was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @snippet }
+        #format.json { render action: 'show', status: :created, location: @snippet }
+        format.json { render json: @snippet }
       else
-        format.html { render action: 'new' }
+        #format.html { render action: 'new' }
         format.json { render json: @snippet.errors, status: :unprocessable_entity }
       end
     end
@@ -33,12 +35,13 @@ class SnippetsController < ApplicationController
   # PATCH/PUT /snippets/1
   # PATCH/PUT /snippets/1.json
   def update
+    logger.debug "UPDATE"
     respond_to do |format|
       if @snippet.update(snippet_params)
-        format.html { redirect_to @snippet, notice: 'Snippet was successfully updated.' }
+        #format.html { redirect_to @snippet, notice: 'Snippet was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        #format.html { render action: 'edit' }
         format.json { render json: @snippet.errors, status: :unprocessable_entity }
       end
     end

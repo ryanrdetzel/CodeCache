@@ -51,6 +51,7 @@
     $(function(){
         var editor = ace.edit("editor");
         var language = $('#snippet_language').val();
+        var save_timer;
 
         //editor.setTheme("ace/theme/monokai");
         if (language){
@@ -58,6 +59,10 @@
         }
         editor.getSession().on('change', function(e) {
             $('#snippet_content').val(editor.getValue());
+            clearTimeout(save_timer);
+            save_timer = setTimeout(function(){
+                save();
+            }, 500);
         });
 
         function resizeAce(){
@@ -67,6 +72,21 @@
             resizeAce()
         });
         resizeAce()
+
+        function save(){
+            var url = $('#snippet_form').attr('action');
+            $.post(url, $( "#snippet_form" ).serialize(), function(data){
+                console.log("Saved");
+                console.log(data);
+                if (url === "/snippets" || url === "/snippets/"){
+                    var newUrl = "/snippets/" + data['uuid'];
+                    $('#snippet_form').attr('action', newUrl);
+                    if (history && history.pushState) { 
+                        history.replaceState(null, document.title, newUrl);
+                    }
+                }
+            });
+        }
     });
 </script>
 </body>
