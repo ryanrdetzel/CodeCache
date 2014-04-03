@@ -33,10 +33,30 @@
     width:100%;
     overflow: auto;
 }
-#snippet_title, #snippet_language{
+#snippet_title, #snippet_language, #search_query{
     font-size:18px;
     line-height:24px;
+    border:0;
 }
+#search_results{
+    position:absolute;
+    z-index:1000;
+    list-style:none;
+    background:#efefef;
+    width:100%;
+    margin:0;
+    padding:0;
+    border-bottom:2px solid #ccc;
+    display:none;
+}
+#search_results li{
+    margin:0;
+    padding-left:15px;
+}
+#search_container{
+position:relative;
+}
+
 </style>
 </head>
 <body data-no-turbolink>
@@ -51,7 +71,7 @@
     $(function(){
         var editor = ace.edit("editor");
         var language = $('#snippet_language').val();
-        var save_timer;
+        var save_timer, search_timer;
 
         //editor.setTheme("ace/theme/monokai");
         if (language){
@@ -87,6 +107,29 @@
                 }
             });
         }
+
+        function search(){
+            var $search_results = $('#search_results');
+            $search_results.empty();
+            var url = '/search?q=' + $('#search_query').val();
+            $.get(url, function(data){
+                var snippets = data.snippets;
+                if (snippets){
+                    $search_results.show();
+                    $.each(snippets, function(n, snippet){
+                        $search_results.append('<li><a href="/s/' + snippet.uuid + '">' + snippet.title + '</a>');
+                    });
+                    console.log(data);
+                }
+            });
+        }
+
+        $('#search_query').on('keyup', function(e){
+            clearTimeout(search_timer);
+            search_timer = setTimeout(function(){
+                search();
+            }, 300);
+        });
     });
 </script>
 </body>

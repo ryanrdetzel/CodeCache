@@ -43,3 +43,8 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem 'elasticsearch-model'
+#gem 'securerandom'
+#require 'securerandom'
+#require 'elasticsearch/model'
+

@@ -1,6 +1,16 @@
 class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:index, :edit, :update, :destroy]
 
+  def search
+    @snippets = Snippet.search params[:q], default_operator: 'AND'
+    print @snippets.results.first
+    #response = Article.search query:     { match:  { title: "Fox Dogs" } },
+    #                      highlight: { fields: { title: {} } }
+    #respond_to do |format|
+    #    format.json { render json: @snippets }
+    #end
+  end
+
   # GET /snippets
   # GET /snippets.json
   def index

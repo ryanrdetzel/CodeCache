@@ -1,7 +1,13 @@
-require 'securerandom'
-
 class Snippet < ActiveRecord::Base
+  include Elasticsearch::Model
   #before_save :set_uuid
+
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: 'false' do
+      indexes :title, analyzer: 'english', index_options: 'offsets'
+      indexes :uuid, analyzer: 'english', index_options: 'offsets'
+    end
+  end
 
   def initialize(attributes = {})
     super
